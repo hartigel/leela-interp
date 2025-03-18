@@ -62,10 +62,18 @@ class Lc0Model(torch.nn.Module):
         self._lc0_model = onnx2torch.convert(onnx_model)
 
         # Add some modules to expose residual activations in a more reasonable shape.
+        pre_attention = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
+        pre_mlp = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
+        post_attention_pre_ln = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
+        post_mlp_pre_ln = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
         post_attention = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
         post_mlp = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
         attention_output = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
         mlp_output = [torch.nn.Identity() for _ in range(self.N_LAYERS)]
+        self._lc0_model.pre_attention = torch.nn.ModuleList(pre_attention)
+        self._lc0_model.pre_mlp = torch.nn.ModuleList(pre_mlp)
+        self._lc0_model.post_attention_pre_ln = torch.nn.ModuleList(post_attention_pre_ln)
+        self._lc0_model.post_mlp_pre_ln = torch.nn.ModuleList(post_mlp_pre_ln)
         self._lc0_model.post_attention = torch.nn.ModuleList(post_attention)
         self._lc0_model.post_mlp = torch.nn.ModuleList(post_mlp)
         self._lc0_model.attention_output = torch.nn.ModuleList(attention_output)

@@ -88,6 +88,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 0
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[0](
+        attn_body_ma_gating_rehape2.reshape(-1, 64, 768)
+    )
+    attn_body_ma_gating_rehape2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_12 = self.initializers.onnx_initializer_12
     encoder0_mha_q_w = getattr(self, "encoder0/mha/Q/w")(
         attn_body_ma_gating_rehape2, initializers_onnx_initializer_12
@@ -265,6 +277,18 @@ def forward(self, input_1):
     encoder0_mha_out_skip = getattr(self, "encoder0/mha/out/skip")(
         encoder0_mha_out_dense_b, encoder0_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[0](
+        encoder0_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder0_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder0_mha_out_dense_b = encoder0_alpha_input = None
     encoder0_ln1 = getattr(self, "encoder0/ln1")(encoder0_mha_out_skip)
     encoder0_mha_out_skip = None
@@ -279,6 +303,18 @@ def forward(self, input_1):
     )
     encoder0_ln1 = residual_reasonable_shape.reshape(-1, 768)
     residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[0](
+        encoder0_ln1.reshape(-1, 64, 768)
+    )
+    encoder0_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
 
     initializers_onnx_initializer_35 = self.initializers.onnx_initializer_35
     encoder0_ffn_dense1_w = getattr(self, "encoder0/ffn/dense1/w")(
@@ -321,6 +357,18 @@ def forward(self, input_1):
     encoder0_ffn_skip = getattr(self, "encoder0/ffn/skip")(
         encoder0_ffn_dense2_b, encoder0_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[0](
+        encoder0_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder0_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder0_ffn_dense2_b = encoder0_alpha_out1 = None
     encoder0_ln2 = getattr(self, "encoder0/ln2")(encoder0_ffn_skip)
     encoder0_ffn_skip = None
@@ -337,6 +385,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 1
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[1](
+        encoder0_ln2.reshape(-1, 64, 768)
+    )
+    encoder0_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_40 = self.initializers.onnx_initializer_40
     encoder1_mha_q_w = getattr(self, "encoder1/mha/Q/w")(
         encoder0_ln2, initializers_onnx_initializer_40
@@ -514,6 +574,18 @@ def forward(self, input_1):
     encoder1_mha_out_skip = getattr(self, "encoder1/mha/out/skip")(
         encoder1_mha_out_dense_b, encoder1_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[1](
+        encoder1_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder1_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder1_mha_out_dense_b = encoder1_alpha_input = None
     encoder1_ln1 = getattr(self, "encoder1/ln1")(encoder1_mha_out_skip)
     encoder1_mha_out_skip = None
@@ -524,6 +596,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[1](
+        encoder1_ln1.reshape(-1, 64, 768)
+    )
+    encoder1_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[1](
         encoder1_ln1.reshape(-1, 64, 768)
     )
     encoder1_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -570,6 +653,18 @@ def forward(self, input_1):
     encoder1_ffn_skip = getattr(self, "encoder1/ffn/skip")(
         encoder1_ffn_dense2_b, encoder1_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[1](
+        encoder1_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder1_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder1_ffn_dense2_b = encoder1_alpha_out1 = None
     encoder1_ln2 = getattr(self, "encoder1/ln2")(encoder1_ffn_skip)
     encoder1_ffn_skip = None
@@ -586,6 +681,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 2
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[2](
+        encoder1_ln2.reshape(-1, 64, 768)
+    )
+    encoder1_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_68 = self.initializers.onnx_initializer_68
     encoder2_mha_q_w = getattr(self, "encoder2/mha/Q/w")(
         encoder1_ln2, initializers_onnx_initializer_68
@@ -763,6 +870,18 @@ def forward(self, input_1):
     encoder2_mha_out_skip = getattr(self, "encoder2/mha/out/skip")(
         encoder2_mha_out_dense_b, encoder2_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[2](
+        encoder2_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder2_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder2_mha_out_dense_b = encoder2_alpha_input = None
     encoder2_ln1 = getattr(self, "encoder2/ln1")(encoder2_mha_out_skip)
     encoder2_mha_out_skip = None
@@ -773,6 +892,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[2](
+        encoder2_ln1.reshape(-1, 64, 768)
+    )
+    encoder2_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[2](
         encoder2_ln1.reshape(-1, 64, 768)
     )
     encoder2_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -819,6 +949,18 @@ def forward(self, input_1):
     encoder2_ffn_skip = getattr(self, "encoder2/ffn/skip")(
         encoder2_ffn_dense2_b, encoder2_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[2](
+        encoder2_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder2_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder2_ffn_dense2_b = encoder2_alpha_out1 = None
     encoder2_ln2 = getattr(self, "encoder2/ln2")(encoder2_ffn_skip)
     encoder2_ffn_skip = None
@@ -835,6 +977,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 3
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[3](
+        encoder2_ln2.reshape(-1, 64, 768)
+    )
+    encoder2_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_96 = self.initializers.onnx_initializer_96
     encoder3_mha_q_w = getattr(self, "encoder3/mha/Q/w")(
         encoder2_ln2, initializers_onnx_initializer_96
@@ -1012,6 +1166,18 @@ def forward(self, input_1):
     encoder3_mha_out_skip = getattr(self, "encoder3/mha/out/skip")(
         encoder3_mha_out_dense_b, encoder3_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[3](
+        encoder3_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder3_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder3_mha_out_dense_b = encoder3_alpha_input = None
     encoder3_ln1 = getattr(self, "encoder3/ln1")(encoder3_mha_out_skip)
     encoder3_mha_out_skip = None
@@ -1022,6 +1188,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[3](
+        encoder3_ln1.reshape(-1, 64, 768)
+    )
+    encoder3_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[3](
         encoder3_ln1.reshape(-1, 64, 768)
     )
     encoder3_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -1068,6 +1245,18 @@ def forward(self, input_1):
     encoder3_ffn_skip = getattr(self, "encoder3/ffn/skip")(
         encoder3_ffn_dense2_b, encoder3_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[3](
+        encoder3_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder3_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder3_ffn_dense2_b = encoder3_alpha_out1 = None
     encoder3_ln2 = getattr(self, "encoder3/ln2")(encoder3_ffn_skip)
     encoder3_ffn_skip = None
@@ -1084,6 +1273,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 4
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[4](
+        encoder3_ln2.reshape(-1, 64, 768)
+    )
+    encoder3_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_124 = self.initializers.onnx_initializer_124
     encoder4_mha_q_w = getattr(self, "encoder4/mha/Q/w")(
         encoder3_ln2, initializers_onnx_initializer_124
@@ -1261,6 +1462,18 @@ def forward(self, input_1):
     encoder4_mha_out_skip = getattr(self, "encoder4/mha/out/skip")(
         encoder4_mha_out_dense_b, encoder4_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[4](
+        encoder4_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder4_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder4_mha_out_dense_b = encoder4_alpha_input = None
     encoder4_ln1 = getattr(self, "encoder4/ln1")(encoder4_mha_out_skip)
     encoder4_mha_out_skip = None
@@ -1271,6 +1484,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[4](
+        encoder4_ln1.reshape(-1, 64, 768)
+    )
+    encoder4_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[4](
         encoder4_ln1.reshape(-1, 64, 768)
     )
     encoder4_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -1317,6 +1541,18 @@ def forward(self, input_1):
     encoder4_ffn_skip = getattr(self, "encoder4/ffn/skip")(
         encoder4_ffn_dense2_b, encoder4_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[4](
+        encoder4_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder4_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder4_ffn_dense2_b = encoder4_alpha_out1 = None
     encoder4_ln2 = getattr(self, "encoder4/ln2")(encoder4_ffn_skip)
     encoder4_ffn_skip = None
@@ -1333,6 +1569,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 5
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[5](
+        encoder4_ln2.reshape(-1, 64, 768)
+    )
+    encoder4_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_152 = self.initializers.onnx_initializer_152
     encoder5_mha_q_w = getattr(self, "encoder5/mha/Q/w")(
         encoder4_ln2, initializers_onnx_initializer_152
@@ -1510,6 +1758,18 @@ def forward(self, input_1):
     encoder5_mha_out_skip = getattr(self, "encoder5/mha/out/skip")(
         encoder5_mha_out_dense_b, encoder5_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[5](
+        encoder5_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder5_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder5_mha_out_dense_b = encoder5_alpha_input = None
     encoder5_ln1 = getattr(self, "encoder5/ln1")(encoder5_mha_out_skip)
     encoder5_mha_out_skip = None
@@ -1520,6 +1780,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[5](
+        encoder5_ln1.reshape(-1, 64, 768)
+    )
+    encoder5_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[5](
         encoder5_ln1.reshape(-1, 64, 768)
     )
     encoder5_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -1566,6 +1837,18 @@ def forward(self, input_1):
     encoder5_ffn_skip = getattr(self, "encoder5/ffn/skip")(
         encoder5_ffn_dense2_b, encoder5_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[5](
+        encoder5_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder5_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder5_ffn_dense2_b = encoder5_alpha_out1 = None
     encoder5_ln2 = getattr(self, "encoder5/ln2")(encoder5_ffn_skip)
     encoder5_ffn_skip = None
@@ -1582,6 +1865,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 6
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[6](
+        encoder5_ln2.reshape(-1, 64, 768)
+    )
+    encoder5_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_180 = self.initializers.onnx_initializer_180
     encoder6_mha_q_w = getattr(self, "encoder6/mha/Q/w")(
         encoder5_ln2, initializers_onnx_initializer_180
@@ -1759,6 +2054,18 @@ def forward(self, input_1):
     encoder6_mha_out_skip = getattr(self, "encoder6/mha/out/skip")(
         encoder6_mha_out_dense_b, encoder6_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[6](
+        encoder6_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder6_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder6_mha_out_dense_b = encoder6_alpha_input = None
     encoder6_ln1 = getattr(self, "encoder6/ln1")(encoder6_mha_out_skip)
     encoder6_mha_out_skip = None
@@ -1769,6 +2076,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[6](
+        encoder6_ln1.reshape(-1, 64, 768)
+    )
+    encoder6_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[6](
         encoder6_ln1.reshape(-1, 64, 768)
     )
     encoder6_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -1815,6 +2133,18 @@ def forward(self, input_1):
     encoder6_ffn_skip = getattr(self, "encoder6/ffn/skip")(
         encoder6_ffn_dense2_b, encoder6_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[6](
+        encoder6_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder6_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder6_ffn_dense2_b = encoder6_alpha_out1 = None
     encoder6_ln2 = getattr(self, "encoder6/ln2")(encoder6_ffn_skip)
     encoder6_ffn_skip = None
@@ -1831,6 +2161,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 7
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[7](
+        encoder6_ln2.reshape(-1, 64, 768)
+    )
+    encoder6_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_208 = self.initializers.onnx_initializer_208
     encoder7_mha_q_w = getattr(self, "encoder7/mha/Q/w")(
         encoder6_ln2, initializers_onnx_initializer_208
@@ -2008,6 +2350,18 @@ def forward(self, input_1):
     encoder7_mha_out_skip = getattr(self, "encoder7/mha/out/skip")(
         encoder7_mha_out_dense_b, encoder7_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[7](
+        encoder7_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder7_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder7_mha_out_dense_b = encoder7_alpha_input = None
     encoder7_ln1 = getattr(self, "encoder7/ln1")(encoder7_mha_out_skip)
     encoder7_mha_out_skip = None
@@ -2018,6 +2372,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[7](
+        encoder7_ln1.reshape(-1, 64, 768)
+    )
+    encoder7_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[7](
         encoder7_ln1.reshape(-1, 64, 768)
     )
     encoder7_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -2064,6 +2429,18 @@ def forward(self, input_1):
     encoder7_ffn_skip = getattr(self, "encoder7/ffn/skip")(
         encoder7_ffn_dense2_b, encoder7_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[7](
+        encoder7_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder7_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder7_ffn_dense2_b = encoder7_alpha_out1 = None
     encoder7_ln2 = getattr(self, "encoder7/ln2")(encoder7_ffn_skip)
     encoder7_ffn_skip = None
@@ -2080,6 +2457,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 8
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[8](
+        encoder7_ln2.reshape(-1, 64, 768)
+    )
+    encoder7_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_236 = self.initializers.onnx_initializer_236
     encoder8_mha_q_w = getattr(self, "encoder8/mha/Q/w")(
         encoder7_ln2, initializers_onnx_initializer_236
@@ -2257,6 +2646,18 @@ def forward(self, input_1):
     encoder8_mha_out_skip = getattr(self, "encoder8/mha/out/skip")(
         encoder8_mha_out_dense_b, encoder8_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[8](
+        encoder8_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder8_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder8_mha_out_dense_b = encoder8_alpha_input = None
     encoder8_ln1 = getattr(self, "encoder8/ln1")(encoder8_mha_out_skip)
     encoder8_mha_out_skip = None
@@ -2267,6 +2668,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[8](
+        encoder8_ln1.reshape(-1, 64, 768)
+    )
+    encoder8_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[8](
         encoder8_ln1.reshape(-1, 64, 768)
     )
     encoder8_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -2313,6 +2725,18 @@ def forward(self, input_1):
     encoder8_ffn_skip = getattr(self, "encoder8/ffn/skip")(
         encoder8_ffn_dense2_b, encoder8_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[8](
+        encoder8_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder8_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder8_ffn_dense2_b = encoder8_alpha_out1 = None
     encoder8_ln2 = getattr(self, "encoder8/ln2")(encoder8_ffn_skip)
     encoder8_ffn_skip = None
@@ -2329,6 +2753,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 9
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[9](
+        encoder8_ln2.reshape(-1, 64, 768)
+    )
+    encoder8_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_264 = self.initializers.onnx_initializer_264
     encoder9_mha_q_w = getattr(self, "encoder9/mha/Q/w")(
         encoder8_ln2, initializers_onnx_initializer_264
@@ -2506,6 +2942,18 @@ def forward(self, input_1):
     encoder9_mha_out_skip = getattr(self, "encoder9/mha/out/skip")(
         encoder9_mha_out_dense_b, encoder9_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[9](
+        encoder9_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder9_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder9_mha_out_dense_b = encoder9_alpha_input = None
     encoder9_ln1 = getattr(self, "encoder9/ln1")(encoder9_mha_out_skip)
     encoder9_mha_out_skip = None
@@ -2516,6 +2964,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[9](
+        encoder9_ln1.reshape(-1, 64, 768)
+    )
+    encoder9_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[9](
         encoder9_ln1.reshape(-1, 64, 768)
     )
     encoder9_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -2562,6 +3021,18 @@ def forward(self, input_1):
     encoder9_ffn_skip = getattr(self, "encoder9/ffn/skip")(
         encoder9_ffn_dense2_b, encoder9_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[9](
+        encoder9_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder9_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder9_ffn_dense2_b = encoder9_alpha_out1 = None
     encoder9_ln2 = getattr(self, "encoder9/ln2")(encoder9_ffn_skip)
     encoder9_ffn_skip = None
@@ -2578,6 +3049,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 10
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[10](
+        encoder9_ln2.reshape(-1, 64, 768)
+    )
+    encoder9_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_292 = self.initializers.onnx_initializer_292
     encoder10_mha_q_w = getattr(self, "encoder10/mha/Q/w")(
         encoder9_ln2, initializers_onnx_initializer_292
@@ -2755,6 +3238,18 @@ def forward(self, input_1):
     encoder10_mha_out_skip = getattr(self, "encoder10/mha/out/skip")(
         encoder10_mha_out_dense_b, encoder10_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[10](
+        encoder10_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder10_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder10_mha_out_dense_b = encoder10_alpha_input = None
     encoder10_ln1 = getattr(self, "encoder10/ln1")(encoder10_mha_out_skip)
     encoder10_mha_out_skip = None
@@ -2765,6 +3260,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[10](
+        encoder10_ln1.reshape(-1, 64, 768)
+    )
+    encoder10_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[10](
         encoder10_ln1.reshape(-1, 64, 768)
     )
     encoder10_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -2811,6 +3317,18 @@ def forward(self, input_1):
     encoder10_ffn_skip = getattr(self, "encoder10/ffn/skip")(
         encoder10_ffn_dense2_b, encoder10_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[10](
+        encoder10_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder10_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder10_ffn_dense2_b = encoder10_alpha_out1 = None
     encoder10_ln2 = getattr(self, "encoder10/ln2")(encoder10_ffn_skip)
     encoder10_ffn_skip = None
@@ -2827,6 +3345,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 11
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[11](
+        encoder10_ln2.reshape(-1, 64, 768)
+    )
+    encoder10_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_320 = self.initializers.onnx_initializer_320
     encoder11_mha_q_w = getattr(self, "encoder11/mha/Q/w")(
         encoder10_ln2, initializers_onnx_initializer_320
@@ -3004,6 +3534,18 @@ def forward(self, input_1):
     encoder11_mha_out_skip = getattr(self, "encoder11/mha/out/skip")(
         encoder11_mha_out_dense_b, encoder11_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[11](
+        encoder11_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder11_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder11_mha_out_dense_b = encoder11_alpha_input = None
     encoder11_ln1 = getattr(self, "encoder11/ln1")(encoder11_mha_out_skip)
     encoder11_mha_out_skip = None
@@ -3014,6 +3556,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[11](
+        encoder11_ln1.reshape(-1, 64, 768)
+    )
+    encoder11_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[11](
         encoder11_ln1.reshape(-1, 64, 768)
     )
     encoder11_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -3060,6 +3613,18 @@ def forward(self, input_1):
     encoder11_ffn_skip = getattr(self, "encoder11/ffn/skip")(
         encoder11_ffn_dense2_b, encoder11_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[11](
+        encoder11_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder11_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder11_ffn_dense2_b = encoder11_alpha_out1 = None
     encoder11_ln2 = getattr(self, "encoder11/ln2")(encoder11_ffn_skip)
     encoder11_ffn_skip = None
@@ -3076,6 +3641,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 12
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[12](
+        encoder11_ln2.reshape(-1, 64, 768)
+    )
+    encoder11_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_348 = self.initializers.onnx_initializer_348
     encoder12_mha_q_w = getattr(self, "encoder12/mha/Q/w")(
         encoder11_ln2, initializers_onnx_initializer_348
@@ -3253,6 +3830,18 @@ def forward(self, input_1):
     encoder12_mha_out_skip = getattr(self, "encoder12/mha/out/skip")(
         encoder12_mha_out_dense_b, encoder12_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[12](
+        encoder12_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder12_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder12_mha_out_dense_b = encoder12_alpha_input = None
     encoder12_ln1 = getattr(self, "encoder12/ln1")(encoder12_mha_out_skip)
     encoder12_mha_out_skip = None
@@ -3263,6 +3852,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[12](
+        encoder12_ln1.reshape(-1, 64, 768)
+    )
+    encoder12_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[12](
         encoder12_ln1.reshape(-1, 64, 768)
     )
     encoder12_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -3309,6 +3909,18 @@ def forward(self, input_1):
     encoder12_ffn_skip = getattr(self, "encoder12/ffn/skip")(
         encoder12_ffn_dense2_b, encoder12_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[12](
+        encoder12_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder12_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder12_ffn_dense2_b = encoder12_alpha_out1 = None
     encoder12_ln2 = getattr(self, "encoder12/ln2")(encoder12_ffn_skip)
     encoder12_ffn_skip = None
@@ -3325,6 +3937,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 13
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[13](
+        encoder12_ln2.reshape(-1, 64, 768)
+    )
+    encoder12_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_376 = self.initializers.onnx_initializer_376
     encoder13_mha_q_w = getattr(self, "encoder13/mha/Q/w")(
         encoder12_ln2, initializers_onnx_initializer_376
@@ -3502,6 +4126,18 @@ def forward(self, input_1):
     encoder13_mha_out_skip = getattr(self, "encoder13/mha/out/skip")(
         encoder13_mha_out_dense_b, encoder13_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[13](
+        encoder13_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder13_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder13_mha_out_dense_b = encoder13_alpha_input = None
     encoder13_ln1 = getattr(self, "encoder13/ln1")(encoder13_mha_out_skip)
     encoder13_mha_out_skip = None
@@ -3512,6 +4148,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[13](
+        encoder13_ln1.reshape(-1, 64, 768)
+    )
+    encoder13_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[13](
         encoder13_ln1.reshape(-1, 64, 768)
     )
     encoder13_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -3558,6 +4205,18 @@ def forward(self, input_1):
     encoder13_ffn_skip = getattr(self, "encoder13/ffn/skip")(
         encoder13_ffn_dense2_b, encoder13_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[13](
+        encoder13_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder13_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder13_ffn_dense2_b = encoder13_alpha_out1 = None
     encoder13_ln2 = getattr(self, "encoder13/ln2")(encoder13_ffn_skip)
     encoder13_ffn_skip = None
@@ -3574,6 +4233,18 @@ def forward(self, input_1):
     ########################################################################
     # Layer 14
     ########################################################################
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_attention[14](
+        encoder13_ln2.reshape(-1, 64, 768)
+    )
+    encoder13_ln2 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     initializers_onnx_initializer_404 = self.initializers.onnx_initializer_404
     encoder14_mha_q_w = getattr(self, "encoder14/mha/Q/w")(
         encoder13_ln2, initializers_onnx_initializer_404
@@ -3751,6 +4422,18 @@ def forward(self, input_1):
     encoder14_mha_out_skip = getattr(self, "encoder14/mha/out/skip")(
         encoder14_mha_out_dense_b, encoder14_alpha_input
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_attention_pre_ln[14](
+        encoder14_mha_out_skip.reshape(-1, 64, 768)
+    )
+    encoder14_mha_out_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder14_mha_out_dense_b = encoder14_alpha_input = None
     encoder14_ln1 = getattr(self, "encoder14/ln1")(encoder14_mha_out_skip)
     encoder14_mha_out_skip = None
@@ -3761,6 +4444,17 @@ def forward(self, input_1):
     ########################################################################
     # This is just an nn.Identity layer
     residual_reasonable_shape = self.post_attention[14](
+        encoder14_ln1.reshape(-1, 64, 768)
+    )
+    encoder14_ln1 = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.pre_mlp[14](
         encoder14_ln1.reshape(-1, 64, 768)
     )
     encoder14_ln1 = residual_reasonable_shape.reshape(-1, 768)
@@ -3807,6 +4501,18 @@ def forward(self, input_1):
     encoder14_ffn_skip = getattr(self, "encoder14/ffn/skip")(
         encoder14_ffn_dense2_b, encoder14_alpha_out1
     )
+
+    ########################################################################
+    # Make residuals accessible with squares as a separate dim,
+    # this is important for nnsight.
+    ########################################################################
+    # This is just an nn.Identity layer
+    residual_reasonable_shape = self.post_mlp_pre_ln[14](
+        encoder14_ffn_skip.reshape(-1, 64, 768)
+    )
+    encoder14_ffn_skip = residual_reasonable_shape.reshape(-1, 768)
+    residual_reasonable_shape = None
+
     encoder14_ffn_dense2_b = encoder14_alpha_out1 = None
     encoder14_ln2 = getattr(self, "encoder14/ln2")(encoder14_ffn_skip)
     encoder14_ffn_skip = None
